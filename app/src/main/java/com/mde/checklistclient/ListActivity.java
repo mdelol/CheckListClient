@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import com.mde.checklistclient.net.RestAdapter;
@@ -13,7 +12,7 @@ import com.mde.checklistclient.net.models.Task;
 
 import java.util.List;
 
-public class ListActivity extends Activity {
+public class ListActivity extends AppCompatActivity {
     private Context context;
     private ListView mMainListView;
 
