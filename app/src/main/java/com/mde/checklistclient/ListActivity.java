@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ListView;
 
@@ -24,7 +25,7 @@ public class ListActivity extends AppCompatActivity {
 
         context = getApplicationContext();
         mMainListView = (RecyclerView) findViewById(R.id.mainListView);
-
+        mMainListView.setLayoutManager(new LinearLayoutManager(context));
         new UserLoginTask().execute();
     }
 
