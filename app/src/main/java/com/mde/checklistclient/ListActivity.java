@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ListView;
 
 import com.mde.checklistclient.net.RestAdapter;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
     private Context context;
-    private ListView mMainListView;
+    private RecyclerView mMainListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,7 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         context = getApplicationContext();
-        mMainListView = (ListView) findViewById(R.id.mainListView);
+        mMainListView = (RecyclerView) findViewById(R.id.mainListView);
 
         new UserLoginTask().execute();
     }

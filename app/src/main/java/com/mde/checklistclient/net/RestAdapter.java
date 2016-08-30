@@ -4,6 +4,7 @@ import com.mde.checklistclient.net.models.Task;
 import com.mde.checklistclient.net.models.UserInfo;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Interceptor;
@@ -46,12 +47,40 @@ public class RestAdapter {
         connection = retrofit.create(IServerConnection.class);
     }
 
+    private static class StubRestAdapter extends RestAdapter {
+        @Override
+        public boolean login(String userName, String password) {
+            return true;
+        }
 
+        @Override
+        public List<Task> getTasks() {
+            List<Task> tasks = new ArrayList<>();
+            Task e = new Task();
+            e.setDescription("testDescription1");
+            e.setCompleted(true);
+            tasks.add(e);
+
+            Task e1 = new Task();
+            e1.setDescription("testDescription2");
+            e1.setCompleted(false);
+            tasks.add(e1);
+
+            Task e2 = new Task();
+            e2.setDescription("testDescription2");
+            e2.setCompleted(false);
+            tasks.add(e2);
+
+            return tasks;
+        }
+    }
     public static RestAdapter getInstance() {
-        if (instance == null) {
+        /*if (instance == null) {
             instance = new RestAdapter();
         }
-        return instance;
+        return instance;*/
+
+        return new StubRestAdapter();
     }
 
     public boolean login(String userName, String password) {

@@ -1,10 +1,10 @@
 package com.mde.checklistclient;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -12,26 +12,44 @@ import com.mde.checklistclient.net.models.Task;
 
 import java.util.List;
 
-public class ElementAdapter extends BaseAdapter {
+public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHolder> {
 
-    private final Context context;
     private final List<Task> elements;
     private final LayoutInflater mInflator;
 
     public ElementAdapter(Context context, List<Task> elements) {
-        this.context = context;
         this.elements = elements;
         this.mInflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    @Override
-    public int getCount() {
-        return elements.size();
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        // each data item is just a string in this case
+        public View view;
+        public CheckBox isDone;
+        public TextView descriptionView;
+
+        public ViewHolder(View v) {
+            super(v);
+
+            view = v;
+            descriptionView = (TextView) view.findViewById(R.id.element_description);
+            isDone = (CheckBox) view.findViewById(R.id.element_checked);
+        }
     }
 
     @Override
-    public Object getItem(int i) {
-        return elements.get(i);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View inflate = mInflator.inflate(R.layout.list_element, parent, false);
+
+        return new ViewHolder(inflate);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Task task = elements.get(position);
+
+        holder.isDone.setChecked(task.isCompleted());
+        holder.descriptionView.setText(task.getDescription());
     }
 
     @Override
@@ -40,18 +58,7 @@ public class ElementAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View convertView, ViewGroup viewGroup) {
-        View view = convertView;
-        if (view == null) {
-            view = mInflator.inflate(R.layout.list_element, viewGroup, false);
-        }
-
-        TextView descriptionView = (TextView) view.findViewById(R.id.element_description);
-        descriptionView.setText(elements.get(i).getDescription());
-
-        CheckBox isDone = (CheckBox) view.findViewById(R.id.element_checked);
-        isDone.setChecked(elements.get(i).isCompleted());
-
-        return view;
+    public int getItemCount() {
+        return elements.size();
     }
 }
