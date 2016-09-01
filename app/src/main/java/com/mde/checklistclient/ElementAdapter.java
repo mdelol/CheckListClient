@@ -1,11 +1,13 @@
 package com.mde.checklistclient;
 
 import android.content.Context;
+import android.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.mde.checklistclient.net.models.Task;
@@ -27,6 +29,7 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHold
         public View view;
         public CheckBox isDone;
         public TextView descriptionView;
+        public ImageButton menuButton;
 
         public ViewHolder(View v) {
             super(v);
@@ -34,6 +37,13 @@ public class ElementAdapter extends RecyclerView.Adapter<ElementAdapter.ViewHold
             view = v;
             descriptionView = (TextView) view.findViewById(R.id.element_description);
             isDone = (CheckBox) view.findViewById(R.id.element_checked);
+            menuButton = (ImageButton) view.findViewById(R.id.dropdown_menu);
+
+            menuButton.setOnClickListener(x -> {
+                PopupMenu popupMenu = new PopupMenu(view.getContext(), menuButton);
+                popupMenu.getMenuInflater().inflate(R.menu.item_menu, popupMenu.getMenu());
+                popupMenu.show();
+            });
         }
     }
 
